@@ -3,6 +3,7 @@
     "@clerk/express": "^2.1.78",
     "@sentry/node": "^11.8.0",
     "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "cloudinary": "^2.11.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
