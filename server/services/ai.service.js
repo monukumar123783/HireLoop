@@ -1,10 +1,9 @@
 import { GoogleGenAI } from '@google/genai'
 import { z } from 'zod'
-import puppeteer from 'puppeteer'
+//import puppeteer from 'puppeteer'
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GOOGLE_GENAI_API_KEY,
-})
+let ai
+const getAI = () => (ai ??= new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY }))
 
 const MODEL = 'gemini-3-flash-preview'
 
@@ -40,7 +39,7 @@ const interviewReportSchema = z.object({
 export async function generateWithRetry(params, retries = 3) {
   for (let i = 0; i < retries; i++) {
     try {
-      return await ai.models.generateContent(params)
+      return await getAI().models.generateContent(params)
     } catch (err) {
       const busy = err.status === 503 || err.status === 429
       if (!busy || i === retries - 1) throw err
@@ -70,7 +69,9 @@ Job Description: ${jobDescription}`
 }
 
 async function generatePdfFromHtml(htmlContent) {
+  const { default: puppeteer } = await import('puppeteer')
   const browser = await puppeteer.launch({
+  
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'], // Docker/Render par zaroori
   })
