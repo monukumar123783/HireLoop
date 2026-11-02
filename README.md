@@ -1,5 +1,5 @@
 # HireLoop
-
+![CI](https://github.com/monukumar123783/HireLoop/actions/workflows/ci.yml/badge.svg)
 Full-stack job portal with an AI Interview Preparation module.
 
 **Live:** https://hire-loop-koxg.vercel.app
