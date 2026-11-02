@@ -104,8 +104,9 @@ export async function generateResumePdfController(req, res) {
       'Content-Disposition': `attachment; filename=resume_${interviewReportId}.pdf`,
     })
     res.send(pdfBuffer)
-  } catch (err) {
-    res.status(500).json({ message: err.message })
+  }  catch (error) {
+  console.error('RESUME PDF ERROR:', error)
+  res.status(500).json({ success: false, message: error.message })
   }
 }
 

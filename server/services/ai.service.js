@@ -71,10 +71,15 @@ Job Description: ${jobDescription}`
 async function generatePdfFromHtml(htmlContent) {
   const { default: puppeteer } = await import('puppeteer')
   const browser = await puppeteer.launch({
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'], // Docker/Render par zaroori
-  })
+  executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+  headless: true,
+  args: [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-gpu'
+  ]
+})
 
   try {
     const page = await browser.newPage()
