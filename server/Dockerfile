@@ -3,11 +3,14 @@ FROM ghcr.io/puppeteer/puppeteer:latest
 USER root
 WORKDIR /app
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+# Puppeteer apna Chrome khud download kare (galat path hatao)
+ENV PUPPETEER_SKIP_DOWNLOAD=false \
+    PUPPETEER_CACHE_DIR=/app/.cache/puppeteer \
+    PUPPETEER_EXECUTABLE_PATH=""
 
 COPY package*.json ./
 RUN npm ci --omit=dev
+RUN npx puppeteer browsers install chrome
 
 COPY . .
 
